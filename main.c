@@ -2,6 +2,7 @@
 #include <string.h>
 #include "edge.h"
 
+
 int main(int argc, char const *argv[]) {
 
     int V, E, S, C, M;
@@ -32,7 +33,7 @@ int main(int argc, char const *argv[]) {
     int servidores[S];
     int clientes[C];
     int monitores[M];
-    Edge* edges[E];
+    float edges[V][V];
 
     //Le e armazena os servidores
     for(int i=0; i<S; i++){
@@ -49,22 +50,27 @@ int main(int argc, char const *argv[]) {
         fscanf(fileIn, "%d", &monitores[i]);
     }
 
+    //inicializa matriz de arestas
+    for(int i =0; i < V;i++)
+        for(int j =0; j < V;j++)
+            edges[i][j] = 0;
+
     //Le, cria e armazena as arestas 
     for(int i=0; i<E; i++){
         int x, y;
         float z;
         fscanf(fileIn, "%d %d %f", &x, &y, &z);
-        edges[i] = createEdge(x,y,z);
+        edges[x][y] = z;
     }
 
-    //print
-    for(int i=0; i<E; i++){
-        //printf("%d %d %f \n", getEdgeSrc(edges[i], getEdgeDest(edges[i]), getEdgeWeight(edges[i])));
-        printEdge(edges[i]);
+    //Print matriz
+    for(int i =0; i < V;i++){
+        for(int j =0; j < V;j++)
+            printf("%.1f     ", edges[i][j]);
+        printf("\n");
     }
 
-    
-    
+    dijkstra(edges,0);
     return 0;
 
 }
