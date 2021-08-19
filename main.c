@@ -70,7 +70,7 @@ int main(int argc, char const *argv[]) {
         printf("\n");
     }
 
-    dijkstra(edges,0);
+    //dijkstra(edges,0);
     return 0;
 
 }

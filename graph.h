@@ -7,10 +7,13 @@ typedef struct graph Graph;
 
 Graph* initGraph(int V, int E);
 
-void insereEdges(Graph* g, Edge* edge, int i);
+void insertEdgeGraph(Graph* g, Edge* edge, int i);
 
-int retornaVerticesGraph(Graph* g);
+Edge* getEdgeGraph(Graph* g,  int i);
 
-int retornaEdgesGraph(Graph* g);
+Edge** getEdgesFromVertex(Graph *g, int vertex, int* numEdges);
 
+int getVerticesGraph(Graph* g);
+
+int getEdgesGraph(Graph* g);
 #endif
