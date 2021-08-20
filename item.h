@@ -6,10 +6,10 @@ typedef struct {
   double peso;     // valor associado ao nó
 } Item;
 
-#define id(A)          (A.id)                           // retorna identificador do nó
-#define value(A)        (A.peso)                       // retorna valor do nó
-#define more(A, B)      ((A) > (B))           // compara nós, por valor
-#define exch(A, B)      { Item t = A; A = B; B = t; }   // troca dois nós
+#define id(A)          (A->id)                           // retorna identificador do nó
+#define value(A)        (A->peso)                       // retorna valor do nó
+#define more(A, B)      (value(A) > value(B))           // compara nós, por valor
+#define exch(A, B)      { Item* t = A; A = B; B = t; }   // troca dois nós
 
 Item** initItem(int t);
 Item* criaItem(double peso, int id);
