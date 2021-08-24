@@ -9,9 +9,16 @@ struct heap {
 };
 
 static void swap(int i, int j, Heap* heap) {
-    exch(heap->pq[i], heap->pq[j]);
-    heap->map[retornaId(heap->pq[i])] = i;
-    heap->map[retornaId(heap->pq[j])] = j;
+    int v1 = retornaId(heap->pq[i]);
+    int v2 = retornaId(heap->pq[j]);
+
+    int aux = heap->map[v1];
+    heap->map[v1] = heap->map[v2];
+    heap->map[v2] = aux;
+
+    Item* it = heap->pq[i];
+    heap->pq[i] = heap->pq[j];
+    heap->pq[j] = it;
 }
 
 static void fix_up(int k, Heap* heap) {
@@ -51,6 +58,16 @@ void PQ_insert(Item* v, Heap* heap) {
     fix_up(heap->N, heap);
 }
 
+void PQ_print(Heap* heap){
+     printf("------ HEAP -------\n");
+
+    for(int i=1; i<= heap->N; ++i)
+        printItem(heap->pq[i]);
+    
+    printf("--------------------\n");
+
+}
+
 Item* PQ_delmin(Heap* heap) {
     Item* min = heap->pq[1];
     swap(1, heap->N, heap);
@@ -58,6 +75,8 @@ Item* PQ_delmin(Heap* heap) {
     fix_down(heap->N, 1, heap);
     return min;
 }
+
+
 
 Item* PQ_min(Heap* heap) {
     return heap->pq[1];

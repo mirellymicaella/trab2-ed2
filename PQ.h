@@ -15,5 +15,6 @@ bool PQ_empty(Heap* heap);        // Retorna True se a PQ não tem elementos
 int  PQ_size(Heap* heap);         // Número de elementos na PQ
 void PQ_setPeso(Heap* heap, int pos, double peso);
 void PQ_finish(Heap* heap);       // Libera memória
+void PQ_print(Heap* heap);
 
 #endif

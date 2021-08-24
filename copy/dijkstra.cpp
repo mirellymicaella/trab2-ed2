@@ -25,6 +25,9 @@ public:
 
 	// prints shortest path from s
 	void shortestPath(int s);
+
+	void printGraph();
+
 };
 
 // Allocates memory for adjacency list
@@ -38,6 +41,13 @@ void Graph::addEdge(int u, int v, int w)
 {
 	adj[u].push_back(make_pair(v, w));
 	adj[v].push_back(make_pair(u, w));
+}
+
+void Graph::printGraph(){
+	// for (int i = 0; i < V; i++)
+	//     PrintList(g->adj[i], "Graph");
+	// adj[u].push_back(make_pair(v, w));
+	// adj[v].push_back(make_pair(u, w));
 }
 
 // Prints shortest paths from src to all other vertices
@@ -60,8 +70,7 @@ void Graph::shortestPath(int src)
 
 	/* Looping till priority queue becomes empty (or all
 	distances are not finalized) */
-	while (!pq.empty())
-	{
+	while (!pq.empty())	{
 		// The first vertex in pair is the minimum distance
 		// vertex, extract it from priority queue.
 		// vertex label is stored in second of pair (it
@@ -69,6 +78,8 @@ void Graph::shortestPath(int src)
 		// sorted distance (distance must be first item
 		// in pair)
 		int u = pq.top().second;
+		int o = pq.top().first;
+		cout << u << "-------" << o << endl;
 		pq.pop();
 
 		// 'i' is used to get all adjacent vertices of a vertex

@@ -1,7 +1,9 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include "graph.h"
 #include "edge.h"
-
+#include "dijkstra.h"
 
 int main(int argc, char const *argv[]) {
 
@@ -29,11 +31,12 @@ int main(int argc, char const *argv[]) {
 
     fscanf(fileIn, "%d %d", &V, &E);
     fscanf(fileIn, "%d %d %d", &S, &C, &M);
-
-    int servidores[S];
-    int clientes[C];
-    int monitores[M];
-    float edges[V][V];
+    
+    int* servidores = (int*) malloc(sizeof(int) * S);
+    int* clientes = (int*) malloc(sizeof(int) * C);;
+    int* monitores = (int*) malloc(sizeof(int) * M);;
+    
+    Graph* graph = initGraph(V);
 
     //Le e armazena os servidores
     for(int i=0; i<S; i++){
@@ -50,27 +53,17 @@ int main(int argc, char const *argv[]) {
         fscanf(fileIn, "%d", &monitores[i]);
     }
 
-    //inicializa matriz de arestas
-    for(int i =0; i < V;i++)
-        for(int j =0; j < V;j++)
-            edges[i][j] = 0;
-
-    //Le, cria e armazena as arestas 
+    //Le, cria e armazena edges no graph
     for(int i=0; i<E; i++){
         int x, y;
         float z;
         fscanf(fileIn, "%d %d %f", &x, &y, &z);
-        edges[x][y] = z;
+        addEdge(x, y, z, graph);
     }
 
-    //Print matriz
-    for(int i =0; i < V;i++){
-        for(int j =0; j < V;j++)
-            printf("%.1f     ", edges[i][j]);
-        printf("\n");
-    }
-
-    //dijkstra(edges,0);
+    printGraph(graph);
+    double* dist = dijkstra(graph,0);
+    printDist(dist,V);
     return 0;
 
 }

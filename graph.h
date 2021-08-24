@@ -2,18 +2,18 @@
 #define GRAPH_H
 
 #include "edge.h"
+#include "list.h"
 
 typedef struct graph Graph;
 
-Graph* initGraph(int V, int E);
+Graph *initGraph(int V);
 
-void insertEdgeGraph(Graph* g, Edge* edge, int i);
+void printGraph(Graph *g);
 
-Edge* getEdgeGraph(Graph* g,  int i);
+void addEdge(int u, int v, int w, Graph *g);
 
-Edge** getEdgesFromVertex(Graph *g, int vertex, int* numEdges);
+int getVerticesGraph(Graph *g);
 
-int getVerticesGraph(Graph* g);
+List* getAdj(Graph* g, int index);
 
-int getEdgesGraph(Graph* g);
 #endif

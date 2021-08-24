@@ -18,6 +18,10 @@
         "functional": "c",
         "type_traits": "c",
         "pq.h": "c",
-        "item.h": "c"
+        "item.h": "c",
+        "string.h": "c",
+        "edge.h": "c",
+        "iostream": "cpp",
+        "dijkstra.h": "c"
     }
 }

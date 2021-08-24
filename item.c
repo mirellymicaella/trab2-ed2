@@ -36,13 +36,17 @@ void printItem(Item* i){
 }
 
 int more(Item* A, Item* B){
-  return A->peso > B->peso;          // compara nós, por valor
+    if(A->peso > B->peso){
+        return 1;
+    }else{
+        return 0;
+    }
 }  
 
 void exch(Item* A, Item* B){
-  Item* t = A; 
-  A = B; 
-  B = t;
+    Item* t = A; 
+    A = B; 
+    B = t;
 }
 
 void destroiItem(Item** item, int t){

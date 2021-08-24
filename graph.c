@@ -1,44 +1,35 @@
 #include "graph.h"
+#include "item.h"
 #include <stdlib.h>
 
 struct graph {
-    int V, E;
-    Edge **edges;
+    int V;
+    List **adj;
 };
 
-Graph *initGraph(int V, int E) {
+Graph *initGraph(int V) {
     Graph *graph = (Graph *)(malloc(sizeof(Graph)));
     graph->V = V;
-    graph->E = E;
 
-    graph->edges = (Edge **)malloc(sizeof(Edge *) * E);
+    graph->adj = (List **)malloc(sizeof(List *) * V);
+    for (int i = 0; i < V; i++)
+        graph->adj[i] = InitList(ITEM);
 
     return graph;
 }
 
-void insertEdgeGraph(Graph *g, Edge *edge, int i) { g->edges[i] = edge; }
-
-Edge** getEdgesFromVertex(Graph *g, int vertex, int* numEdges) {
-    // Conta arestas associadas
-    (*numEdges) = 0;
+void printGraph(Graph *g) {
     for (int i = 0; i < g->V; i++)
-        if (g->edges[i] == vertex) (*numEdges)++;
-
-    Edge *edges[(*numEdges)];
-
-    // Armazena as arestas associadas
-    int indexEdges = 0;
-    for (int i = 0; i < (*numEdges); i++)
-        if (g->edges[i] == vertex) {
-            edges[indexEdges] = g->edges[i];
-            indexEdges++;
-        }
-    
-    return edges;
+        PrintList(g->adj[i], "Graph");
 }
 
-Edge *getEdgeGraph(Graph *g, int i) { return g->edges[i]; }
+void addEdge(int u, int v, int w, Graph *g) {
+    InsertList(g->adj[u], criaItem(w, v));
+    //InsertList(g->adj[v], criaItem(w, u));
+}
 
 int getVerticesGraph(Graph *g) { return g->V; }
 
-int getEdgesGraph(Graph *g) { return g->E; }
+List* getAdj(Graph* g, int index){
+    return g->adj[index];
+}
