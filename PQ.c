@@ -10,8 +10,8 @@ struct heap {
 
 static void swap(int i, int j, Heap* heap) {
     exch(heap->pq[i], heap->pq[j]);
-    heap->map[id(heap->pq[i])] = i;
-    heap->map[id(heap->pq[j])] = j;
+    heap->map[retornaId(heap->pq[i])] = i;
+    heap->map[retornaId(heap->pq[j])] = j;
 }
 
 static void fix_up(int k, Heap* heap) {
@@ -65,7 +65,7 @@ Item* PQ_min(Heap* heap) {
 
 void PQ_decrease_key(int id, double value, Heap* heap) {
     int i = heap->map[id];
-    value(heap->pq[i]) = value;
+    setpeso_Item(heap->pq[i], value);
     fix_up(i, heap);
 }
 

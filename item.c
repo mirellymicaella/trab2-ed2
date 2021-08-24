@@ -1,4 +1,11 @@
 #include "item.h"
+#include <stdlib.h>
+#include <stdio.h>
+
+struct item{
+  int id;           // identificador do nó
+  double peso;     // valor associado ao nó
+};
 
 Item** initItem(int t){
     Item ** item = (Item**) malloc(sizeof(Item*) * t);
@@ -18,6 +25,24 @@ double retornaPeso(Item* i){
 
 int retornaId(Item* i){
     return i->id;
+}
+
+void setpeso_Item(Item* i, double peso){
+    i->peso = peso;
+}
+
+void printItem(Item* i){
+		printf("%d -  %lf\n",i->id, i->peso);
+}
+
+int more(Item* A, Item* B){
+  return A->peso > B->peso;          // compara nós, por valor
+}  
+
+void exch(Item* A, Item* B){
+  Item* t = A; 
+  A = B; 
+  B = t;
 }
 
 void destroiItem(Item** item, int t){
