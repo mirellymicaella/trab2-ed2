@@ -2,9 +2,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-
-
-
 struct item{
   int id;           // identificador do nó
   double peso;     // valor associado ao nó
@@ -45,12 +42,6 @@ int more(Item* A, Item* B){
         return 0;
     }
 }  
-
-void exch(Item* A, Item* B){
-    Item* t = A; 
-    A = B; 
-    B = t;
-}
 
 void destroiItem(Item** item, int t){
     for (int i = 1; i < t; ++i) {

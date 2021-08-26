@@ -25,11 +25,9 @@ void printGraph(Graph *g) {
 
 void addEdge(int u, int v, double w, Graph *g) {
     InsertList(g->adj[u], criaItem(w, v));
-    //InsertList(g->adj[v], criaItem(w, u));
 }
 
 void addEdge2(int u, int v, double w, Graph *g) {
-    //InsertList(g->adj[u], criaItem(w, v));
     InsertList(g->adj[v], criaItem(w, u));
 }
 

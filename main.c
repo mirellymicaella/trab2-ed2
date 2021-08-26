@@ -35,7 +35,6 @@ int main(int argc, char const *argv[]) {
 
     int *servidores = (int *)malloc(sizeof(int) * S);
     int *clientes = (int *)malloc(sizeof(int) * C);
-
     int *monitores = (int *)malloc(sizeof(int) * M);
 
     Graph *graph = initGraph(V);
@@ -56,9 +55,11 @@ int main(int argc, char const *argv[]) {
 
     int x, y;
     double z;
-    // Le, cria e armazena edges no graph
+
+    // Cria 2 grafos, 1 para cada sentido
     for (int i = 0; i < E; i++) {
         fscanf(fileIn, "%d %d %lf", &x, &y, &z);
+        //printf("%.16lf\n", z);
         addEdge(x, y, z, graph);
         addEdge2(x, y, z, graph2);
     }
@@ -80,40 +81,4 @@ int main(int argc, char const *argv[]) {
     //! MONITOR PARA CLIENTE
 
     return 0;
-
-    /*
-        Result SC[S] // RTT
-
-        Result SM[S] // RTT*
-        Result MC[M] // RTT*
-
-        struct{
-            int indice;
-            double* pesos;
-        }Result
-
-        indice = 1
-        double = [ 1.27, 1.74, 1.33 ]
-        indice = 4
-        double = [ 2.42, 1.74, 1.33 ]
-        indice = 6
-        double = [ 2.42, 1.74, 1.33 ]
-
-        indice = 1
-        double = [ 1.27, 1.74, 1.33 ]
-        indice = 4
-        double = [ 2.42, 1.74, 1.33 ]
-        indice = 6
-        double = [ 2.42, 1.74, 1.33 ]
-
-        indice = 0
-        double = [ 1.27, 1.74, 1.33 ]
-        indice = 2
-        double = [ 2.42, 1.74, 1.33 ]
-        indice = 3
-        double = [ 2.42, 1.74, 1.33 ]
-
-        clientes[3] = [7, 8, 9]
-
-    */
 }

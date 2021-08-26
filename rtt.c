@@ -23,9 +23,9 @@ static void addPeso(Rtt *rtt, double peso, int index) { rtt->pesos[index] = peso
 
 void printRTT(Rtt **rtt, int *points, int tam) {
     for (int j = 0; j < tam; j++) {
-        printf(BLUE);
+        
         printf("---- RTT %d ----\n", rtt[j]->id);
-        printf(RESET);
+        
         for (int i = 0; i < rtt[j]->tam; i++)
             printf("%d ( %lf )\n", points[i], rtt[j]->pesos[i]);
         printf("\n");
@@ -67,7 +67,7 @@ void RTTx(Rtt **servidorMonitor, Rtt **monitorCliente, int S, int M, int C, int 
     // Armazena todas as distancias de servidor --> monitor
     for (int i = 0; i < S; i++) {
         for (int j = 0; j < M; j++) {
-            printf("%lf\n", servidorMonitor[i]->pesos[j]);
+            printf("(%d) --> (%d) = %.16lf\n",servidorMonitor[i]->id, monitores[j], servidorMonitor[i]->pesos[j]);
             vetorSM[aux] = servidorMonitor[i]->pesos[j];
             aux++;
         }
@@ -79,7 +79,7 @@ void RTTx(Rtt **servidorMonitor, Rtt **monitorCliente, int S, int M, int C, int 
     // Armazena todas as distancias de monitor --> cliente
     for (int i = 0; i < C; i++) {
         for (int j = 0; j < M; j++) {
-            printf("%lf\n", monitorCliente[j]->pesos[i]);
+            printf("(%d) --> (%d) = %.16lf\n", monitorCliente[j]->id, clientes[i], monitorCliente[j]->pesos[i]);
             vetorMC[aux] = monitorCliente[j]->pesos[i];
             aux++;
         }

@@ -13,7 +13,13 @@
 #define WHITE "\033[0;37m" 
 #define RESET "\033[0m"
 
-
+/*
+*  Ira imprimir o vetor de distancia auxiliar
+*  inputs: Ponteiro do vetor e o tamanho do vetor
+*  output: -
+*  pre-condicao: O vetor deve existir
+*  pos-condicao: O vetor não é alterado
+*/
 void printDist(double *dist, int size);
 
 /*
