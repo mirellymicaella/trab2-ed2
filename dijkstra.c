@@ -25,8 +25,8 @@ double *dijkstra(Graph *graph, int src) {
         PQ_insert(item, heap);
     }
 
-    PQ_setPeso(heap, src, 0);
-    dist[src] = 0;
+    PQ_setPeso(heap, src, 0.0);
+    dist[src] = 0.0;
 
     while (!PQ_empty(heap)) {
         Item *vertex = PQ_delmin(heap);
@@ -39,7 +39,7 @@ double *dijkstra(Graph *graph, int src) {
             Item *item = (Item *)GetItemList(list, i);
 
             int v = retornaId(item);
-            int weight = retornaPeso(item);
+            double weight = retornaPeso(item);
 
             // If there is shorted path to v through u.
             if (dist[indice] != (double)INT_MAX && dist[v] > dist[indice] + weight) {

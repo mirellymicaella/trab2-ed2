@@ -5,6 +5,12 @@ comp:
 all: comp
 	./prog ./input/entrada.txt ./output/saida.txt
 
+all10: comp
+	./prog ./input/N10_S3_C3_M3.txt ./output/saida.txt
+
+all100: comp
+	./prog ./input/N100_S20_C30_M5.txt ./output/saida.txt
+
 test: item.c PQ.c list.c graph.c dijkstra.c
 	clear
 	gcc -o prog item.c PQ.c  list.c  graph.c dijkstra.c

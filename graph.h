@@ -10,7 +10,9 @@ Graph *initGraph(int V);
 
 void printGraph(Graph *g);
 
-void addEdge(int u, int v, int w, Graph *g);
+void addEdge(int u, int v, double w, Graph *g);
+
+void addEdge2(int u, int v, double w, Graph *g);
 
 int getVerticesGraph(Graph *g);
 

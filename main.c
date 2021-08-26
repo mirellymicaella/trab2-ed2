@@ -53,17 +53,60 @@ int main(int argc, char const *argv[]) {
         fscanf(fileIn, "%d", &monitores[i]);
     }
 
+    Graph* graph2 = initGraph(V);
+
+    int x, y;
+    double z;
     //Le, cria e armazena edges no graph
-    for(int i=0; i<E; i++){
-        int x, y;
-        float z;
-        fscanf(fileIn, "%d %d %f", &x, &y, &z);
+    for(int i=0; i<E; i++){    
+        fscanf(fileIn, "%d %d %lf", &x, &y, &z);
         addEdge(x, y, z, graph);
+        addEdge2(x, y, z, graph2);
     }
 
-    printGraph(graph);
-    double* dist = dijkstra(graph,0);
-    printDist(dist,V);
+    //1º parte RTT - a,b
+    double* distAB;
+    double* distBA;
+    for(int i=0; i<S; i++){
+        int numeroServidor = servidores[i];
+
+        distAB = dijkstra(graph,numeroServidor);
+        distBA = dijkstra(graph2,numeroServidor);
+
+        for(int j=0; j<C; j++){
+            int numeroCliente=clientes[j];          
+            double resultado = distBA[numeroCliente]+distAB[numeroCliente];
+
+            printf("%lf + %lf =  %f \n", distBA[numeroCliente],distAB[numeroCliente], resultado);
+
+            
+        }
+        printDist(distAB, V);
+        printf("\n");
+    }
+    //RTT∗ (0, 4) = min{RT T(0, 1) + RT T(1, 4), RT T(0, 2) + RT T(2, 4)}
+    //RTT* 
+
+    //  for(int i=0; i<S; i++){
+    //     int numeroServidor = servidores[i];
+    //     //printf("%d nm serv\n", numeroServidor);
+    //     distAB = dijkstra(graph,numeroServidor);
+    //     distBA = dijkstra(graph2,numeroServidor);
+    //     //printDist(distAB,V);
+    //     for(int l=0; l<M; l++){
+            
+        
+    //         for(int j=0; j<C; j++){
+    //             int numeroCliente=clientes[j];          
+    //             double resultado = distBA[numeroCliente]+distAB[numeroCliente];
+    //             printf("\033[0;35m");
+    //             printf("%lf + %lf =  %f \n", distBA[numeroCliente],distAB[numeroCliente], resultado);
+    //             printf("\033[0m");
+
+    //         }
+    //     }
+    // }
+    
     return 0;
 
 }

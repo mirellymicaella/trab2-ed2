@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+
+
+
 struct item{
   int id;           // identificador do nó
   double peso;     // valor associado ao nó
