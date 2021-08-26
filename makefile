@@ -11,6 +11,12 @@ all10: comp
 all100: comp
 	./prog ./input/N100_S20_C30_M5.txt ./output/saida.txt
 
+all1000: comp
+	./prog ./input/N1000_S50_C300_M10.txt ./output/saida.txt
+
+all10000: comp
+	./prog ./input/N10000_S50_C300_M10.txt ./output/saida.txt
+
 test: item.c PQ.c list.c graph.c dijkstra.c
 	clear
 	gcc -o prog item.c PQ.c  list.c  graph.c dijkstra.c

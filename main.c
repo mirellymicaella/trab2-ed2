@@ -5,6 +5,25 @@
 #include "edge.h"
 #include "dijkstra.h"
 
+void RTT(int* origem, int* destino, Graph* g1, Graph* g2, int limiteOrigem, int limiteDestino){
+    double* distAB;
+    double* distBA;
+    for(int i=0; i<limiteOrigem; i++){
+        int numeroServidor = origem[i];
+
+        distAB = dijkstra(g1,numeroServidor);
+        distBA = dijkstra(g2,numeroServidor);
+
+        for(int j=0; j<limiteDestino; j++){
+            int numeroCliente = destino[j];          
+            double resultado = distBA[numeroCliente]+distAB[numeroCliente];
+
+            printf("%lf + %lf =  %f \n", distBA[numeroCliente],distAB[numeroCliente], resultado);
+        }
+        //printDist(distAB, V);
+    }
+}
+
 int main(int argc, char const *argv[]) {
 
     int V, E, S, C, M;
@@ -65,7 +84,7 @@ int main(int argc, char const *argv[]) {
     }
 
     //1º parte RTT - a,b
-    double* distAB;
+    /*double* distAB;
     double* distBA;
     for(int i=0; i<S; i++){
         int numeroServidor = servidores[i];
@@ -74,38 +93,25 @@ int main(int argc, char const *argv[]) {
         distBA = dijkstra(graph2,numeroServidor);
 
         for(int j=0; j<C; j++){
-            int numeroCliente=clientes[j];          
+            int numeroCliente = clientes[j];          
             double resultado = distBA[numeroCliente]+distAB[numeroCliente];
 
             printf("%lf + %lf =  %f \n", distBA[numeroCliente],distAB[numeroCliente], resultado);
-
-            
         }
-        printDist(distAB, V);
-        printf("\n");
-    }
-    //RTT∗ (0, 4) = min{RT T(0, 1) + RT T(1, 4), RT T(0, 2) + RT T(2, 4)}
-    //RTT* 
+        //printDist(distAB, V);
+    }*/
 
-    //  for(int i=0; i<S; i++){
-    //     int numeroServidor = servidores[i];
-    //     //printf("%d nm serv\n", numeroServidor);
-    //     distAB = dijkstra(graph,numeroServidor);
-    //     distBA = dijkstra(graph2,numeroServidor);
-    //     //printDist(distAB,V);
-    //     for(int l=0; l<M; l++){
-            
-        
-    //         for(int j=0; j<C; j++){
-    //             int numeroCliente=clientes[j];          
-    //             double resultado = distBA[numeroCliente]+distAB[numeroCliente];
-    //             printf("\033[0;35m");
-    //             printf("%lf + %lf =  %f \n", distBA[numeroCliente],distAB[numeroCliente], resultado);
-    //             printf("\033[0m");
+    RTT(servidores, clientes, graph, graph2, S, C);
+    printf("\n");
+    RTT(servidores, monitores, graph, graph2, S, M);
+    printf("\n");
+    RTT(monitores, clientes, graph, graph2, M, C);
+   // printf("\n");
 
-    //         }
-    //     }
-    // }
+    //! SERVIDOR PARA CLIENTE
+    //! SERVIDOR PARA MONITOR
+    //! MONITOR PARA CLIENTE
+
     
     return 0;
 
