@@ -1,28 +1,10 @@
+#include "dijkstra.h"
+#include "edge.h"
+#include "graph.h"
+#include "rtt.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "graph.h"
-#include "edge.h"
-#include "dijkstra.h"
-
-void RTT(int* origem, int* destino, Graph* g1, Graph* g2, int limiteOrigem, int limiteDestino){
-    double* distAB;
-    double* distBA;
-    for(int i=0; i<limiteOrigem; i++){
-        int numeroServidor = origem[i];
-
-        distAB = dijkstra(g1,numeroServidor);
-        distBA = dijkstra(g2,numeroServidor);
-
-        for(int j=0; j<limiteDestino; j++){
-            int numeroCliente = destino[j];          
-            double resultado = distBA[numeroCliente]+distAB[numeroCliente];
-
-            printf("%lf + %lf =  %f \n", distBA[numeroCliente],distAB[numeroCliente], resultado);
-        }
-        //printDist(distAB, V);
-    }
-}
 
 int main(int argc, char const *argv[]) {
 
@@ -50,69 +32,88 @@ int main(int argc, char const *argv[]) {
 
     fscanf(fileIn, "%d %d", &V, &E);
     fscanf(fileIn, "%d %d %d", &S, &C, &M);
-    
-    int* servidores = (int*) malloc(sizeof(int) * S);
-    int* clientes = (int*) malloc(sizeof(int) * C);;
-    int* monitores = (int*) malloc(sizeof(int) * M);;
-    
-    Graph* graph = initGraph(V);
 
-    //Le e armazena os servidores
-    for(int i=0; i<S; i++){
+    int *servidores = (int *)malloc(sizeof(int) * S);
+    int *clientes = (int *)malloc(sizeof(int) * C);
+
+    int *monitores = (int *)malloc(sizeof(int) * M);
+
+    Graph *graph = initGraph(V);
+
+    // Le e armazena os servidores
+    for (int i = 0; i < S; i++)
         fscanf(fileIn, "%d", &servidores[i]);
-    }
 
-    //Le e armazena os clientes
-    for(int i=0; i<C; i++){
+    // Le e armazena os clientes
+    for (int i = 0; i < C; i++)
         fscanf(fileIn, "%d", &clientes[i]);
-    }
 
-    //Le e armazena os monitores
-    for(int i=0; i<M; i++){
+    // Le e armazena os monitores
+    for (int i = 0; i < M; i++)
         fscanf(fileIn, "%d", &monitores[i]);
-    }
 
-    Graph* graph2 = initGraph(V);
+    Graph *graph2 = initGraph(V);
 
     int x, y;
     double z;
-    //Le, cria e armazena edges no graph
-    for(int i=0; i<E; i++){    
+    // Le, cria e armazena edges no graph
+    for (int i = 0; i < E; i++) {
         fscanf(fileIn, "%d %d %lf", &x, &y, &z);
         addEdge(x, y, z, graph);
         addEdge2(x, y, z, graph2);
     }
 
-    //1º parte RTT - a,b
-    /*double* distAB;
-    double* distBA;
-    for(int i=0; i<S; i++){
-        int numeroServidor = servidores[i];
+    Rtt **servidorCliente = RTT(servidores, clientes, graph, graph2, S, C);
 
-        distAB = dijkstra(graph,numeroServidor);
-        distBA = dijkstra(graph2,numeroServidor);
+    Rtt **servidorMonitor = RTT(servidores, monitores, graph, graph2, S, M);
 
-        for(int j=0; j<C; j++){
-            int numeroCliente = clientes[j];          
-            double resultado = distBA[numeroCliente]+distAB[numeroCliente];
+    Rtt **monitorCliente = RTT(monitores, clientes, graph, graph2, M, C);
 
-            printf("%lf + %lf =  %f \n", distBA[numeroCliente],distAB[numeroCliente], resultado);
-        }
-        //printDist(distAB, V);
-    }*/
+    // printRTT(servidorCliente, clientes, S);
+    // printRTT(servidorMonitor, monitores, S);
+    // printRTT(monitorCliente, clientes, M);
 
-    RTT(servidores, clientes, graph, graph2, S, C);
-    printf("\n");
-    RTT(servidores, monitores, graph, graph2, S, M);
-    printf("\n");
-    RTT(monitores, clientes, graph, graph2, M, C);
-   // printf("\n");
+    RTTx(servidorMonitor, monitorCliente, S, M, C, clientes, monitores);
 
     //! SERVIDOR PARA CLIENTE
     //! SERVIDOR PARA MONITOR
     //! MONITOR PARA CLIENTE
 
-    
     return 0;
 
+    /*
+        Result SC[S] // RTT
+
+        Result SM[S] // RTT*
+        Result MC[M] // RTT*
+
+        struct{
+            int indice;
+            double* pesos;
+        }Result
+
+        indice = 1
+        double = [ 1.27, 1.74, 1.33 ]
+        indice = 4
+        double = [ 2.42, 1.74, 1.33 ]
+        indice = 6
+        double = [ 2.42, 1.74, 1.33 ]
+
+        indice = 1
+        double = [ 1.27, 1.74, 1.33 ]
+        indice = 4
+        double = [ 2.42, 1.74, 1.33 ]
+        indice = 6
+        double = [ 2.42, 1.74, 1.33 ]
+
+        indice = 0
+        double = [ 1.27, 1.74, 1.33 ]
+        indice = 2
+        double = [ 2.42, 1.74, 1.33 ]
+        indice = 3
+        double = [ 2.42, 1.74, 1.33 ]
+
+        clientes[3] = [7, 8, 9]
+
+    */
 }

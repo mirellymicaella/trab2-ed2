@@ -11,6 +11,9 @@ all10: comp
 all100: comp
 	./prog ./input/N100_S20_C30_M5.txt ./output/saida.txt
 
+val100: comp
+	valgrind --leak-check=full ./prog ./input/N100_S20_C30_M5.txt ./output/saida.txt
+
 all1000: comp
 	./prog ./input/N1000_S50_C300_M10.txt ./output/saida.txt
 
