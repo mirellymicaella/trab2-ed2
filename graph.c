@@ -36,3 +36,10 @@ int getVerticesGraph(Graph *g) { return g->V; }
 List* getAdj(Graph* g, int index){
     return g->adj[index];
 }
+
+void destroiGraph(Graph* g) {
+    for (int i = 0; i < g->V; i++)
+        DestroiList(g->adj[i]);
+    free(g->adj);
+    free(g);
+}

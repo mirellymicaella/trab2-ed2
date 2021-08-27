@@ -86,7 +86,7 @@ void PQ_setPeso(Heap* heap, int pos, double peso);
 *  pre-condicao: A Heap deve existir
 *  pos-condicao: A Heap não deve existir mais
 */
-void PQ_finish(Heap* heap);
+void PQ_finish(Heap* heap, int V);
 
 /*
 *  Imprime a Heap

@@ -44,23 +44,26 @@ Rtt **RTT(int *origem, int *destino, Graph *g1, Graph *g2, int limiteOrigem, int
 
         distAB = dijkstra(g1, numeroServidor);
         distBA = dijkstra(g2, numeroServidor);
+        
 
         for (int j = 0; j < limiteDestino; j++) {
             int numeroCliente = destino[j];
             double resultado = distBA[numeroCliente] + distAB[numeroCliente];
             addPeso(rtts[i], resultado, j);
         }
+        free(distAB);
+        free(distBA);
     }
+
+    
 
     return rtts;
 }
 
-void RTTx(Rtt **servidorMonitor, Rtt **monitorCliente, int S, int M, int C, int *clientes,
-           int *monitores) {
-    double* vetorSM = (double*)malloc( sizeof(double) * S*M);
-    double* vetorMC = (double*)malloc( sizeof(double) * M*C);
-
-    double* result = (double*)malloc( sizeof(double) * S*C);
+void RTTx(Rtt **servidorMonitor, Rtt **monitorCliente, int S, int M, int C, int *clientes, int *monitores) {
+    double* vetorSM = (double*)malloc(sizeof(double) * S*M);
+    double* vetorMC = (double*)malloc(sizeof(double) * M*C);
+    double* result = (double*)malloc(sizeof(double) * S*C);
 
     int aux = 0;
 
@@ -86,11 +89,15 @@ void RTTx(Rtt **servidorMonitor, Rtt **monitorCliente, int S, int M, int C, int 
         printf("\n");
     }
 
-    
-    
+    free(vetorSM);
+    free(vetorMC);
+    free(result);
 }
 
-void freeRTT(Rtt *rtt) {
-    free(rtt->pesos);
+void freeRTT(Rtt **rtt, int tam) {
+    for(int i=0; i<tam; i++){
+        free(rtt[i]->pesos);
+        free(rtt[i]);
+    }
     free(rtt);
 }

@@ -107,8 +107,8 @@ void PQ_setPeso(Heap* heap, int pos, double peso){
 
 }
 
-void PQ_finish(Heap* heap) {
-    free(heap->pq);
+void PQ_finish(Heap* heap, int V) {
+    destroiItem(heap->pq, V);
     free(heap->map);
     free(heap);
 }

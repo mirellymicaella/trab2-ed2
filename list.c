@@ -105,9 +105,16 @@ int GetSize(List *list) { return list->size; }
 
 void DestroiList(List *list) {
     for (int i = 0; i < list->size; i++)
-        if (list->items[i])
-            if (list->type == LIST)
+        if (list->items[i]){
+            if (list->type == LIST){
                 DestroiList(list);
+            }
+                
+        }
+
+    for(int i=0; i< list->size; i++){
+        free(list->items[i]);
+    }    
     free(list->items);
     free(list);
 }

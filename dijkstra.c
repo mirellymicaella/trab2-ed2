@@ -62,6 +62,7 @@ double *dijkstra(Graph *graph, int src) {
         }
     }
 
+    PQ_finish(heap, V+1);
     //Retorna o vetor de distâncias auxiliares
     return dist;
 }

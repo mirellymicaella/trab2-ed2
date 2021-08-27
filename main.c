@@ -6,6 +6,15 @@
 #include <stdlib.h>
 #include <string.h>
 
+int* LePontos(int tam, FILE* arq){
+    int *vet = (int *)malloc(sizeof(int) * tam);
+
+    for (int i = 0; i < tam; i++)
+        fscanf(arq, "%d", &vet[i]);
+
+    return vet;
+}
+
 int main(int argc, char const *argv[]) {
 
     int V, E, S, C, M;
@@ -33,25 +42,12 @@ int main(int argc, char const *argv[]) {
     fscanf(fileIn, "%d %d", &V, &E);
     fscanf(fileIn, "%d %d %d", &S, &C, &M);
 
-    int *servidores = (int *)malloc(sizeof(int) * S);
-    int *clientes = (int *)malloc(sizeof(int) * C);
-    int *monitores = (int *)malloc(sizeof(int) * M);
-
     Graph *graph = initGraph(V);
-
-    // Le e armazena os servidores
-    for (int i = 0; i < S; i++)
-        fscanf(fileIn, "%d", &servidores[i]);
-
-    // Le e armazena os clientes
-    for (int i = 0; i < C; i++)
-        fscanf(fileIn, "%d", &clientes[i]);
-
-    // Le e armazena os monitores
-    for (int i = 0; i < M; i++)
-        fscanf(fileIn, "%d", &monitores[i]);
-
     Graph *graph2 = initGraph(V);
+
+    int *servidores = LePontos(S, fileIn);
+    int *clientes = LePontos(C, fileIn);
+    int *monitores = LePontos(M, fileIn);
 
     int x, y;
     double z;
@@ -59,7 +55,6 @@ int main(int argc, char const *argv[]) {
     // Cria 2 grafos, 1 para cada sentido
     for (int i = 0; i < E; i++) {
         fscanf(fileIn, "%d %d %lf", &x, &y, &z);
-        //printf("%.16lf\n", z);
         addEdge(x, y, z, graph);
         addEdge2(x, y, z, graph2);
     }
@@ -76,9 +71,19 @@ int main(int argc, char const *argv[]) {
 
     RTTx(servidorMonitor, monitorCliente, S, M, C, clientes, monitores);
 
-    //! SERVIDOR PARA CLIENTE
-    //! SERVIDOR PARA MONITOR
-    //! MONITOR PARA CLIENTE
+    free(servidores);
+    free(monitores);
+    free(clientes);
+
+    freeRTT(servidorCliente, S);
+    freeRTT(servidorMonitor, S);
+    freeRTT(monitorCliente, M);
+
+    destroiGraph(graph);
+    destroiGraph(graph2);
+
+    fclose(fileIn);
+    fclose(fileOut);
 
     return 0;
 }

@@ -41,6 +41,6 @@ void RTTx(Rtt **servidorMonitor, Rtt **monitorCliente, int S, int M, int C, int 
 *  pre-condicao: O RTT deve existir
 *  pos-condicao: O RTT não deve existir mais
 */
-void freeRTT(Rtt* rtt);
+void freeRTT(Rtt** rtt, int tam);
 
 #endif

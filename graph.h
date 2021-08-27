@@ -60,4 +60,13 @@ int getVerticesGraph(Graph *g);
 */
 List* getAdj(Graph* g, int index);
 
+/*
+*  Liberará a memória do grafo
+*  inputs: Um ponteiro para o grafo
+*  output: -
+*  pre-condicao: O Grafo deve existir
+*  pos-condicao: O Grafo não deve existir mais
+*/
+void destroiGraph(Graph* g);
+
 #endif
