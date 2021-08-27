@@ -32,7 +32,7 @@ void printRTT(Rtt **rtt, int *points, int tam);
 */
 Rtt** RTT(int* origem, int* destino, Graph* g1, Graph* g2, int limiteOrigem, int limiteDestino);
 
-void RTTx(Rtt **servidorMonitor, Rtt **monitorCliente, int S, int M, int C, int *clientes, int *monitores);
+double* RTTx(Rtt **servidorMonitor, Rtt **monitorCliente, int S, int M, int C, int *clientes, int *monitores, Rtt **servidorCliente);
 
 /*
 *  Liberará a memória do RTT

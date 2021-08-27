@@ -57,11 +57,11 @@ Rtt **RTT(int *origem, int *destino, Graph *g1, Graph *g2, int limiteOrigem, int
     return rtts;
 }
 
-void RTTx(Rtt **servidorMonitor, Rtt **monitorCliente, int S, int M, int C, int *clientes,
-          int *monitores) {
+double* RTTx(Rtt **servidorMonitor, Rtt **monitorCliente, int S, int M, int C, int *clientes,
+          int *monitores, Rtt **servidorCliente) {
     double *vetorSM = (double *)malloc(sizeof(double) * S * M);
     double *vetorMC = (double *)malloc(sizeof(double) * M * C);
-    double *vetorSMC = (double *)malloc(sizeof(double) * S * M * M * C);
+    //double *vetorSMC = (double *)malloc(sizeof(double) * S * M * M * C);
     double *result = (double *)malloc(sizeof(double) * S * C);
 
     int aux = 0;
@@ -104,9 +104,9 @@ void RTTx(Rtt **servidorMonitor, Rtt **monitorCliente, int S, int M, int C, int 
         */
 
     // Soma todas as distancias servidor --> monitor --> cliente
-    char *colors[3] = {RED, YELLOW, GREEN, BLUE};
+    //char *colors[3] = {RED, YELLOW, GREEN, BLUE};
     int mon = 0;
-    for (int i = 0; i < S * M; i++) {
+    /*for (int i = 0; i < S * M; i++) {
         for (int j = 0; j < C; j++) {
             double peso = vetorSM[i] + vetorMC[m];
 
@@ -120,11 +120,51 @@ void RTTx(Rtt **servidorMonitor, Rtt **monitorCliente, int S, int M, int C, int 
                 m = 0;
             };
         }
+    }*/
+    double menor = 9999999.0;
+
+    int auxVet1 = 0, auxVet2 = 0;
+
+    double soma1, soma2;
+
+    int K=0;
+
+    int auxVet0=0;
+    int auxVet02=0;
+
+    for(int i=0; i<S*C; i++){
+        for(int j=0+auxVet1; j<M+auxVet1; j++){
+            double peso = vetorSM[j] + vetorMC[auxVet2];
+            //printf("%d(%.16lf)     %d(%.16lf)\n", j,vetorSM[j],  auxVet2, vetorMC[auxVet2]);
+            if(peso < menor){
+                menor = peso;
+                soma1 = vetorSM[j];
+                soma2 = vetorMC[auxVet2];
+            }
+            auxVet2++;
+        }
+
+        //printf("%.16lf + %.16lf = %.16lf\n",soma1, soma2,  menor/servidorCliente[auxVet0]->pesos[auxVet02]);
+
+        result[K] = menor/servidorCliente[auxVet0]->pesos[auxVet02];
+        K++;
+        auxVet02++;
+        menor = 9999999.0;
+        if(auxVet2==C*M){
+            auxVet02 = 0;
+            auxVet0++;
+            auxVet1 += M;
+            auxVet2=0;
+            menor = 9999999.0;
+            //printf("\n");
+        }
+
     }
 
     free(vetorSM);
     free(vetorMC);
-    free(result);
+    
+    return result;
 }
 
 void freeRTT(Rtt **rtt, int tam) {

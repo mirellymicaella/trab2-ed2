@@ -1,15 +1,15 @@
 comp:
 	clear
-	gcc -o prog *.c
+	gcc -o prog *.c -lm
 
 all: comp
-	./prog ./input/entrada.txt ./output/saida.txt
+	./prog ./input/entrada.txt ./output/saida.txt 
 
 all10: comp
-	./prog ./input/N10_S3_C3_M3.txt ./output/saida.txt
+	./prog ./input/N10_S3_C3_M3.txt ./output/saida.txt 
 
 all100: comp
-	./prog ./input/N100_S20_C30_M5.txt ./output/saida.txt
+	./prog ./input/N100_S20_C30_M5.txt ./output/saida.txt 
 
 val10: comp
 	valgrind --leak-check=full ./prog ./input/N10_S3_C3_M3.txt ./output/saida.txt

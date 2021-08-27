@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 int* LePontos(int tam, FILE* arq){
     int *vet = (int *)malloc(sizeof(int) * tam);
@@ -65,15 +66,22 @@ int main(int argc, char const *argv[]) {
 
     Rtt **monitorCliente = RTT(monitores, clientes, graph, graph2, M, C);
 
-    // printRTT(servidorCliente, clientes, S);
+    printRTT(servidorCliente, clientes, S);
     // printRTT(servidorMonitor, monitores, S);
     // printRTT(monitorCliente, clientes, M);
 
-    RTTx(servidorMonitor, monitorCliente, S, M, C, clientes, monitores);
+
+    double* result = RTTx(servidorMonitor, monitorCliente, S, M, C, clientes, monitores, servidorCliente);
+
+    for(int i=0; i<S*C; i++){
+        printf("%.16lf\n", result[i]);
+    }
 
     free(servidores);
     free(monitores);
     free(clientes);
+
+    free(result);
 
     freeRTT(servidorCliente, S);
     freeRTT(servidorMonitor, S);
