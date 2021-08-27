@@ -5,13 +5,6 @@ comp:
 all: comp
 	./prog ./input/entrada.txt ./output/saida.txt
 
-<<<<<<< HEAD
-test: dijkstra.c
-	clear
-	gcc -o prog dijkstra.c
-	./prog 
-
-=======
 all10: comp
 	./prog ./input/N10_S3_C3_M3.txt ./output/saida.txt
 
@@ -42,12 +35,9 @@ cpp:
 
 
 #valgrind de teste
-val: item.c PQ.c list.c dijkstra.c
-	clear
-	gcc -o prog item.c PQ.c list.c dijkstra.c
-	valgrind --leak-check=full ./prog
+val: comp
+	valgrind --leak-check=full ./prog ./input/entrada.txt ./output/saida.txt
 
 #input 2
->>>>>>> 994349d57586a3200a1dc319ca385bebfe96b669
 in2: comp
 	./prog ./input/N100_S20_C30_M5.txt ./output/saida.txt

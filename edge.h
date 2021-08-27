@@ -5,7 +5,6 @@
 
 typedef struct edge Edge;
 
-
 Edge *createEdge(int src, int dest, float weight);
 
 int getEdgeSrc(Edge *edge);
