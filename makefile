@@ -5,5 +5,10 @@ comp:
 all: comp
 	./prog ./input/entrada.txt ./output/saida.txt
 
+test: dijkstra.c
+	clear
+	gcc -o prog dijkstra.c
+	./prog 
+
 in2: comp
 	./prog ./input/N100_S20_C30_M5.txt ./output/saida.txt
