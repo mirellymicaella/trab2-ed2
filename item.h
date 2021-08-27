@@ -1,21 +1,78 @@
 #ifndef ITEM_H
 #define ITEM_H
 
-typedef struct {
-  int id;           // identificador do nó
-  double peso;     // valor associado ao nó
-} Item;
+typedef struct item Item;
 
-#define id(A)          (A.id)                           // retorna identificador do nó
-#define value(A)        (A.peso)                       // retorna valor do nó
-#define more(A, B)      ((A) > (B))           // compara nós, por valor
-#define exch(A, B)      { Item t = A; A = B; B = t; }   // troca dois nós
+/*
+*  Ira verificar qual item tem o maior peso
+*  inputs: Dois ponteiros para itens
+*  output: O maior peso entre eles
+*  pre-condicao: Itens devem existir
+*  pos-condicao: Os itens não são alterados
+*/
+int more(Item* A, Item* B);
 
+/*
+*  Ira inicializar a estrutura item
+*  inputs: Um inteiro que representa o tamanho do vetor de itens
+*  output: Um ponteiro duplo para a estrutura item
+*  pre-condicao: -
+*  pos-condicao: O vetor de item deve estar criado
+*/
 Item** initItem(int t);
-Item* criaItem(double peso, int id);
-double retornaPeso(Item* i);
-int retornaId(Item* i);
-void destroiItem(Item** item, int t);
 
+/*
+*  Ira criar um item
+*  inputs: Um double representando o peso e um inteiro representando o id
+*  output: Um ponteiro para item
+*  pre-condicao: -
+*  pos-condicao: O item será criado
+*/
+Item* criaItem(double peso, int id);
+
+/*
+*  Retorna o peso do item
+*  inputs: Um ponteiro para item
+*  output: O peso do item
+*  pre-condicao: Item deve existir
+*  pos-condicao: O Item não é alterado
+*/
+double retornaPeso(Item* i);
+
+/*
+*  Retorna o id do item
+*  inputs: Um ponteiro para item
+*  output: O id do item
+*  pre-condicao: Item deve existir
+*  pos-condicao: O Item não é alterado
+*/
+int retornaId(Item* i);
+
+/*
+*  Imprime um item
+*  inputs: Um ponteiro para item
+*  output: -
+*  pre-condicao: Item deve existir
+*  pos-condicao: O Item não é alterado
+*/
+void printItem(Item* i);
+
+/*
+*  Altera o peso do item
+*  inputs: Um ponteiro para item e o novo valor do peso
+*  output: -
+*  pre-condicao: Item deve existir
+*  pos-condicao: O peso do item estará alterado
+*/
+void setpeso_Item(Item* i, double peso);
+
+/*
+*  Libera a memória do vetor de itens
+*  inputs: Um ponteiro para vetor de itens e o tamanho do vetor
+*  output: -
+*  pre-condicao: O vetor de itens deve existir
+*  pos-condicao: O vetor será apagado
+*/
+void destroiItem(Item** item, int t);
 
 #endif

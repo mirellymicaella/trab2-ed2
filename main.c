@@ -1,7 +1,19 @@
-#include <stdio.h>
-#include <string.h>
+#include "dijkstra.h"
 #include "edge.h"
+#include "graph.h"
+#include "rtt.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
+int* LePontos(int tam, FILE* arq){
+    int *vet = (int *)malloc(sizeof(int) * tam);
+
+    for (int i = 0; i < tam; i++)
+        fscanf(arq, "%d", &vet[i]);
+
+    return vet;
+}
 
 int main(int argc, char const *argv[]) {
 
@@ -30,47 +42,48 @@ int main(int argc, char const *argv[]) {
     fscanf(fileIn, "%d %d", &V, &E);
     fscanf(fileIn, "%d %d %d", &S, &C, &M);
 
-    int servidores[S];
-    int clientes[C];
-    int monitores[M];
-    float edges[V][V];
+    Graph *graph = initGraph(V);
+    Graph *graph2 = initGraph(V);
 
-    //Le e armazena os servidores
-    for(int i=0; i<S; i++){
-        fscanf(fileIn, "%d", &servidores[i]);
+    int *servidores = LePontos(S, fileIn);
+    int *clientes = LePontos(C, fileIn);
+    int *monitores = LePontos(M, fileIn);
+
+    int x, y;
+    double z;
+
+    // Cria 2 grafos, 1 para cada sentido
+    for (int i = 0; i < E; i++) {
+        fscanf(fileIn, "%d %d %lf", &x, &y, &z);
+        addEdge(x, y, z, graph);
+        addEdge2(x, y, z, graph2);
     }
 
-    //Le e armazena os clientes
-    for(int i=0; i<C; i++){
-        fscanf(fileIn, "%d", &clientes[i]);
-    }
+    Rtt **servidorCliente = RTT(servidores, clientes, graph, graph2, S, C);
 
-    //Le e armazena os monitores
-    for(int i=0; i<M; i++){
-        fscanf(fileIn, "%d", &monitores[i]);
-    }
+    Rtt **servidorMonitor = RTT(servidores, monitores, graph, graph2, S, M);
 
-    //inicializa matriz de arestas
-    for(int i =0; i < V;i++)
-        for(int j =0; j < V;j++)
-            edges[i][j] = 0;
+    Rtt **monitorCliente = RTT(monitores, clientes, graph, graph2, M, C);
 
-    //Le, cria e armazena as arestas 
-    for(int i=0; i<E; i++){
-        int x, y;
-        float z;
-        fscanf(fileIn, "%d %d %f", &x, &y, &z);
-        edges[x][y] = z;
-    }
+    // printRTT(servidorCliente, clientes, S);
+    // printRTT(servidorMonitor, monitores, S);
+    // printRTT(monitorCliente, clientes, M);
 
-    //Print matriz
-    for(int i =0; i < V;i++){
-        for(int j =0; j < V;j++)
-            printf("%.1f     ", edges[i][j]);
-        printf("\n");
-    }
+    RTTx(servidorMonitor, monitorCliente, S, M, C, clientes, monitores);
 
-    //dijkstra(edges,0);
+    free(servidores);
+    free(monitores);
+    free(clientes);
+
+    freeRTT(servidorCliente, S);
+    freeRTT(servidorMonitor, S);
+    freeRTT(monitorCliente, M);
+
+    destroiGraph(graph);
+    destroiGraph(graph2);
+
+    fclose(fileIn);
+    fclose(fileOut);
+
     return 0;
-
 }

@@ -1,5 +1,27 @@
 {
     "files.associations": {
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "graph.h": "c",
+        "array": "c",
+        "deque": "c",
+        "forward_list": "c",
+        "list": "c",
+        "string": "c",
+        "unordered_map": "c",
+        "unordered_set": "c",
+        "vector": "c",
+        "string_view": "c",
+        "initializer_list": "c",
+        "regex": "c",
+        "valarray": "c",
+        "*.tcc": "c",
+        "functional": "c",
+        "type_traits": "c",
+        "pq.h": "c",
+        "item.h": "c",
+        "string.h": "c",
+        "edge.h": "c",
+        "iostream": "cpp",
+        "dijkstra.h": "c"
     }
 }
