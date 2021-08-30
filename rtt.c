@@ -21,6 +21,14 @@ Rtt *initRTT(int id, int tam) {
 
 static void addPeso(Rtt *rtt, double peso, int index) { rtt->pesos[index] = peso; }
 
+int getIdRTT(Rtt *rtt){
+    return rtt->id;
+}
+
+double getWeightRTT(Rtt* rtt, int index){
+    return rtt->pesos[index];
+}
+
 void printRTT(Rtt **rtt, int *points, int tam) {
     for (int j = 0; j < tam; j++) {
 
@@ -69,63 +77,31 @@ double* RTTx(Rtt **servidorMonitor, Rtt **monitorCliente, int S, int M, int C, i
     // Armazena todas as distancias de servidor --> monitor
     for (int i = 0; i < S; i++) {
         for (int j = 0; j < M; j++) {
-            printf("(%d) --> (%d) = %.16lf\n", servidorMonitor[i]->id, monitores[j],
-                   servidorMonitor[i]->pesos[j]);
+            //printf("(%d) --> (%d) = %.16lf\n", servidorMonitor[i]->id, monitores[j],
+                  // servidorMonitor[i]->pesos[j]);
             vetorSM[aux] = servidorMonitor[i]->pesos[j];
             aux++;
         }
-        printf("\n");
+        //printf("\n");
     }
     aux = 0;
-    printf("---------------------------------------------------\n");
+    //printf("---------------------------------------------------\n");
     // Armazena todas as distancias de monitor --> cliente
     for (int i = 0; i < C; i++) {
         for (int j = 0; j < M; j++) {
-            printf("(%d) --> (%d) = %.16lf\n", monitorCliente[j]->id, clientes[i],
-                   monitorCliente[j]->pesos[i]);
+           // printf("(%d) --> (%d) = %.16lf\n", monitorCliente[j]->id, clientes[i],
+                   //monitorCliente[j]->pesos[i]);
             vetorMC[aux] = monitorCliente[j]->pesos[i];
             aux++;
         }
-        printf("\n");
+       // printf("\n");
     }
     aux = 0;
     int c = 0, m = 0, s = 0;
-    /* //CASO PEQUENO FUNCIONA]
-        // percorre o vetor de SM e para cada C consegue mapear o S->M->C
-        for (int i = 0; i < S * M; i++) {
-            for (int j = 0; j < C; j++) {
-                double peso = vetorSM[i] + vetorMC[m];
-                printf("(%d) --> (%d) --> (%d) = %.16lf\n", servidorMonitor[s]->id,
-                       monitorCliente[m]->id, clientes[j], peso);
-                m++;
-                if (s == S) s = 0;
-            }
-        }
-        */
-
-    // Soma todas as distancias servidor --> monitor --> cliente
-    //char *colors[3] = {RED, YELLOW, GREEN, BLUE};
-    int mon = 0;
-    /*for (int i = 0; i < S * M; i++) {
-        for (int j = 0; j < C; j++) {
-            double peso = vetorSM[i] + vetorMC[m];
-
-            printf("(%d) --> (%d) --> (%d) = %.16lf\n", servidorMonitor[s]->id,
-                   monitorCliente[mon]->id, clientes[j], peso);
-            mon++;
-            if (mon == M) mon = 0;
-            m++;
-            if (m == M * C) {
-                s++;
-                m = 0;
-            };
-        }
-    }*/
+    
     double menor = 9999999.0;
 
     int auxVet1 = 0, auxVet2 = 0;
-
-    double soma1, soma2;
 
     int K=0;
 
@@ -135,16 +111,12 @@ double* RTTx(Rtt **servidorMonitor, Rtt **monitorCliente, int S, int M, int C, i
     for(int i=0; i<S*C; i++){
         for(int j=0+auxVet1; j<M+auxVet1; j++){
             double peso = vetorSM[j] + vetorMC[auxVet2];
-            //printf("%d(%.16lf)     %d(%.16lf)\n", j,vetorSM[j],  auxVet2, vetorMC[auxVet2]);
+            
             if(peso < menor){
                 menor = peso;
-                soma1 = vetorSM[j];
-                soma2 = vetorMC[auxVet2];
             }
             auxVet2++;
         }
-
-        //printf("%.16lf + %.16lf = %.16lf\n",soma1, soma2,  menor/servidorCliente[auxVet0]->pesos[auxVet02]);
 
         result[K] = menor/servidorCliente[auxVet0]->pesos[auxVet02];
         K++;
@@ -156,7 +128,6 @@ double* RTTx(Rtt **servidorMonitor, Rtt **monitorCliente, int S, int M, int C, i
             auxVet1 += M;
             auxVet2=0;
             menor = 9999999.0;
-            //printf("\n");
         }
 
     }

@@ -34,6 +34,10 @@ Rtt** RTT(int* origem, int* destino, Graph* g1, Graph* g2, int limiteOrigem, int
 
 double* RTTx(Rtt **servidorMonitor, Rtt **monitorCliente, int S, int M, int C, int *clientes, int *monitores, Rtt **servidorCliente);
 
+int getIdRTT(Rtt *rtt);
+
+double getWeightRTT(Rtt* rtt, int index);
+
 /*
 *  Liberará a memória do RTT
 *  inputs: Um ponteiro para o RTT

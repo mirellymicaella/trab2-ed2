@@ -23,11 +23,6 @@ all1000: comp
 all10000: comp
 	./prog ./input/N10000_S50_C300_M10.txt ./output/saida.txt
 
-test: item.c PQ.c list.c graph.c dijkstra.c
-	clear
-	gcc -o prog item.c PQ.c  list.c  graph.c dijkstra.c
-	./prog 
-
 cpp:
 	clear
 	g++ -o prog dijkstra.cpp
@@ -37,7 +32,3 @@ cpp:
 #valgrind de teste
 val: comp
 	valgrind --leak-check=full ./prog ./input/entrada.txt ./output/saida.txt
-
-#input 2
-in2: comp
-	./prog ./input/N100_S20_C30_M5.txt ./output/saida.txt

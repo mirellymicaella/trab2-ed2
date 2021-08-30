@@ -2,12 +2,12 @@
 #include "edge.h"
 #include "graph.h"
 #include "rtt.h"
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 
-int* LePontos(int tam, FILE* arq){
+int *LePontos(int tam, FILE *arq) {
     int *vet = (int *)malloc(sizeof(int) * tam);
 
     for (int i = 0; i < tam; i++)
@@ -66,22 +66,34 @@ int main(int argc, char const *argv[]) {
 
     Rtt **monitorCliente = RTT(monitores, clientes, graph, graph2, M, C);
 
-    printRTT(servidorCliente, clientes, S);
-    // printRTT(servidorMonitor, monitores, S);
-    // printRTT(monitorCliente, clientes, M);
+    double *pesos =
+        RTTx(servidorMonitor, monitorCliente, S, M, C, clientes, monitores, servidorCliente);
 
+    Edge** result = (Edge**) malloc(sizeof(Edge*)*S*C);
 
-    double* result = RTTx(servidorMonitor, monitorCliente, S, M, C, clientes, monitores, servidorCliente);
-
-    for(int i=0; i<S*C; i++){
-        printf("%.16lf\n", result[i]);
+    int k = 0;
+    for(int i = 0; i < S; i++){
+        int id = getIdRTT(servidorCliente[i]);
+        Rtt* sc = servidorCliente[i];
+        for(int j=0; j < C; j++, k++)
+            result[k] = createEdge(id, clientes[j], pesos[k]); 
+        
     }
+
+    SortEdgesByWeight(result, S*C);
+
+    for (int i = 0; i < S * C; i++){
+        printEdgeFile(result[i], fileOut);
+        freeEdge(result[i]);
+    }
+    
+    free(result);
 
     free(servidores);
     free(monitores);
     free(clientes);
 
-    free(result);
+    free(pesos);
 
     freeRTT(servidorCliente, S);
     freeRTT(servidorMonitor, S);
