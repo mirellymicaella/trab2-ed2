@@ -25,18 +25,18 @@ void printRTT(Rtt **rtt, int *points, int tam);
 
 /*
 *  Ira armazenar todos as distancias minimas do valores encontrados no grafo dentro de um vetor
-*  inputs: Vetor de origem, Vetor de destino, Ambos os grafos utilizados e os limites de origem e destino
+*  inputs: Vetor de origin, Vetor de destination, Ambos os grafos utilizados e os limites de origin e destination
 *  output: Um vetor de RTT com todas as distâncias
 *  pre-condicao: Os grafos e os vetores deverão existir
 *  pos-condicao: As distâncias deverão estar armazenadas
 */
-Rtt** RTT(int* origem, int* destino, Graph* g1, Graph* g2, int limiteOrigem, int limiteDestino);
+Rtt** RTT(int* origin, int* destination, Graph* g1, Graph* g2, int limitOrigin, int limitDestination);
 
 double* RTTx(Rtt **servidorMonitor, Rtt **monitorCliente, int S, int M, int C, int *clientes, int *monitores, Rtt **servidorCliente);
 
-int getIdRTT(Rtt *rtt);
+int getIdItemRTT(Rtt *rtt);
 
-double getWeightRTT(Rtt* rtt, int index);
+double getWeightItemRTT(Rtt* rtt, int index);
 
 /*
 *  Liberará a memória do RTT

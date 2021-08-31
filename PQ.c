@@ -9,8 +9,8 @@ struct heap {
 };
 
 static void swap(int i, int j, Heap* heap) {
-    int v1 = retornaId(heap->pq[i]);
-    int v2 = retornaId(heap->pq[j]);
+    int v1 = getIdItem(heap->pq[i]);
+    int v2 = getIdItem(heap->pq[j]);
 
     int aux = heap->map[v1];
     heap->map[v1] = heap->map[v2];
@@ -22,7 +22,7 @@ static void swap(int i, int j, Heap* heap) {
 }
 
 static void fix_up(int k, Heap* heap) {
-    while (k > 1 && more(heap->pq[k/2], heap->pq[k])) {
+    while (k > 1 && moreItem(heap->pq[k/2], heap->pq[k])) {
         swap(k, k/2, heap);
         k = k/2;
     }
@@ -31,18 +31,18 @@ static void fix_up(int k, Heap* heap) {
 static void fix_down(int sz, int k, Heap* heap){
     while (2*k <= sz) {
         int j = 2*k;
-        if (j < sz && more(heap->pq[j], heap->pq[j+1])){
+        if (j < sz && moreItem(heap->pq[j], heap->pq[j+1]))
             j++;
-        }
-        if (!more(heap->pq[k], heap->pq[j])) {
+        
+        if (!moreItem(heap->pq[k], heap->pq[j])) 
             break;
-        }
+        
         swap(k, j, heap);
         k = j;
     }
 }
 
-Heap* PQ_init(int maxN) {
+Heap* initPQ(int maxN) {
     Heap* h = (Heap*) malloc(sizeof(Heap));
     h->pq = initItem(maxN+1);
     h->map = (int *) malloc((maxN+1) * sizeof (int));
@@ -51,14 +51,14 @@ Heap* PQ_init(int maxN) {
     return h;
 }
 
-void PQ_insert(Item* v, Heap* heap) {
+void insertPQ(Item* v, Heap* heap) {
     heap->N++;
     heap->pq[heap->N] = v;
-    heap->map[retornaId(v)] = heap->N;
+    heap->map[getIdItem(v)] = heap->N;
     fix_up(heap->N, heap);
 }
 
-void PQ_print(Heap* heap){
+void printPQ(Heap* heap){
      printf("------ HEAP -------\n");
 
     for(int i=1; i<= heap->N; ++i)
@@ -68,7 +68,7 @@ void PQ_print(Heap* heap){
 
 }
 
-Item* PQ_delmin(Heap* heap) {
+Item* delMinPQ(Heap* heap) {
     Item* min = heap->pq[1];
     swap(1, heap->N, heap);
     heap->N--;
@@ -78,37 +78,37 @@ Item* PQ_delmin(Heap* heap) {
 
 
 
-Item* PQ_min(Heap* heap) {
+Item* getMinPQ(Heap* heap) {
     return heap->pq[1];
 }
 
-void PQ_decrease_key(int id, double value, Heap* heap) {
+void decreaseKeyPQ(int id, double value, Heap* heap) {
     int i = heap->map[id];
-    setpeso_Item(heap->pq[i], value);
+    setWeightItem(heap->pq[i], value);
     fix_up(i, heap);
 }
 
-bool PQ_empty(Heap* heap) {
+bool isEmptyPQ(Heap* heap) {
     return heap->N == 0;
 }
 
-int  PQ_size(Heap* heap) {
+int  getSizePQ(Heap* heap) {
     return heap->N;
 }
 
-void PQ_setPeso(Heap* heap, int pos, double peso){
+void setWeightPQ(Heap* heap, int pos, double peso){
 
     int i = heap->map[pos];
 
     if (pos >= 0){
-        setpeso_Item(heap->pq[i], peso);
+        setWeightItem(heap->pq[i], peso);
         fix_up(i, heap);
     }
 
 }
 
-void PQ_finish(Heap* heap, int V) {
-    destroiItem(heap->pq, V);
+void destroyPQ(Heap* heap, int V) {
+    destroyItem(heap->pq, V);
     free(heap->map);
     free(heap);
 }

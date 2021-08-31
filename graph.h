@@ -15,18 +15,10 @@ typedef struct graph Graph;
 */
 Graph *initGraph(int V);
 
-/*
-*  Ira imprimir um grafo
-*  inputs: Ponteiro para grafo
-*  output: -
-*  pre-condicao: Grafo deve existir
-*  pos-condicao: O grafo será impresso no terminal
-*/
-void printGraph(Graph *g);
 
 /*
 *  Ira adicionar uma aresta ao grafo no sentido de ida
-*  inputs: inteiros representando a origem e destino, double do peso e o Grafo
+*  inputs: inteiros representando a origin e destination, double do peso e o Grafo
 *  output: -
 *  pre-condicao: Grafo deve existir
 *  pos-condicao: O grafo deve estar com uma nova aresta
@@ -35,7 +27,7 @@ void addEdge(int u, int v, double w, Graph *g);
 
 /*
 *  Ira adicionar uma aresta ao grafo no sentido de volta
-*  inputs: inteiros representando a origem e destino, double do peso e o Grafo
+*  inputs: inteiros representando a origin e destination, double do peso e o Grafo
 *  output: -
 *  pre-condicao: Grafo deve existir
 *  pos-condicao: O grafo deve estar com uma nova aresta
@@ -58,7 +50,7 @@ int getVerticesGraph(Graph *g);
 *  pre-condicao: Grafo deve existir e a lista deve existir na posição passada
 *  pos-condicao: O grafo não é alterado
 */
-List* getAdj(Graph* g, int index);
+List* getAdjGraph(Graph* g, int index);
 
 /*
 *  Liberará a memória do grafo

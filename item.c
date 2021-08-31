@@ -4,7 +4,7 @@
 
 struct item{
   int id;           // identificador do nó
-  double peso;     // valor associado ao nó
+  double weight;     // valor associado ao nó
 };
 
 Item** initItem(int t){
@@ -12,40 +12,36 @@ Item** initItem(int t){
     return item;
 }
 
-Item* criaItem(double peso, int id){
+Item* createItem(double weight, int id){
     Item * item = (Item*) malloc(sizeof(Item));
     item->id = id;
-    item->peso = peso;
+    item->weight = weight;
     return item;
 }
 
-double retornaPeso(Item* i){
-    return i->peso;
+double getWeightItem(Item* i){
+    return i->weight;
 }
 
-int retornaId(Item* i){
+int getIdItem(Item* i){
     return i->id;
 }
 
-void setpeso_Item(Item* i, double peso){
-    i->peso = peso;
+void setWeightItem(Item* i, double weight){
+    i->weight = weight;
 }
 
 void printItem(Item* i){
-		printf("%d -  %lf\n",i->id, i->peso);
+	printf("%d -  %lf\n",i->id, i->weight);
 }
 
-int more(Item* A, Item* B){
-    if(A->peso > B->peso){
-        return 1;
-    }else{
-        return 0;
-    }
+int moreItem(Item* A, Item* B){
+    return  A->weight > B->weight;
 }  
 
-void destroiItem(Item** item, int t){
-    for (int i = 1; i < t; ++i) {
+void destroyItem(Item** item, int t){
+    for (int i = 1; i < t; ++i) 
         free(item[i]);
-    }
+    
     free(item);
 }
