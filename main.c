@@ -7,18 +7,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-int *LePontos(int tam, FILE *arq) {
-    int *vet = (int *)malloc(sizeof(int) * tam);
-
-    for (int i = 0; i < tam; i++)
-        fscanf(arq, "%d", &vet[i]);
-
+int * readPoints(int size, FILE *file) {
+    int *vet = (int *)malloc(sizeof(int) * size);
+    for (int i = 0; i < size; i++)
+        fscanf(file, "%d", &vet[i]);
     return vet;
 }
 
 int main(int argc, char const *argv[]) {
-
-    int V, E, S, C, M;
 
     // Verifica se todas as infos foram dadas
     if (argc < 3) {
@@ -26,8 +22,8 @@ int main(int argc, char const *argv[]) {
         return 0;
     }
 
-    FILE *fileIn = fopen(argv[1], "r");
-    FILE *fileOut = fopen(argv[2], "w");
+    FILE* fileIn = fopen(argv[1], "r");
+    FILE* fileOut = fopen(argv[2], "w");
 
     // Verifica se o arquivo digitado eh um endereco valido
     if (fileIn == NULL) {
@@ -40,15 +36,20 @@ int main(int argc, char const *argv[]) {
         return 0;
     }
 
+    int V, E, S, C, M;
+
+    // Faz a leitura da entrada para os valores dos tamanhos
     fscanf(fileIn, "%d %d", &V, &E);
     fscanf(fileIn, "%d %d %d", &S, &C, &M);
 
+    // Inicia a estrutura Graph
     Graph *graph = initGraph(V);
     Graph *graph2 = initGraph(V);
 
-    int *servidores = LePontos(S, fileIn);
-    int *clientes = LePontos(C, fileIn);
-    int *monitores = LePontos(M, fileIn);
+    // Faz a leitura da entrada para cada vetor
+    int *servers = readPoints(S, fileIn);
+    int *clients = readPoints(C, fileIn);
+    int *monitors = readPoints(M, fileIn);
 
     int x, y;
     double z;
@@ -60,44 +61,48 @@ int main(int argc, char const *argv[]) {
         addEdge2(x, y, z, graph2);
     }
 
-    Rtt **servidorCliente = RTT(servidores, clientes, graph, graph2, S, C);
+    // Pega todos os valores de RTT, sendo para S->C, S->M e M->C
+    Rtt **serverClient = RTT(servers, clients, graph, graph2, S, C);
+    Rtt **serverMonitor = RTT(servers, monitors, graph, graph2, S, M);
+    Rtt **monitorClient = RTT(monitors, clients, graph, graph2, M, C);
 
-    Rtt **servidorMonitor = RTT(servidores, monitores, graph, graph2, S, M);
+    // Com os valores dos RTT, faz a divisão e pega os menores valores
+    double *weights =
+        RTTx(serverMonitor, monitorClient, S, M, C, clients, monitors, serverClient);
 
-    Rtt **monitorCliente = RTT(monitores, clientes, graph, graph2, M, C);
-
-    double *pesos =
-        RTTx(servidorMonitor, monitorCliente, S, M, C, clientes, monitores, servidorCliente);
-
+    // Inicia a estrutura Edge
     Edge** result = (Edge**) malloc(sizeof(Edge*)*S*C);
 
+    // Cria as Edges com seus tamanhos e ID
     int k = 0;
     for(int i = 0; i < S; i++){
-        int id = getIdRTT(servidorCliente[i]);
-        Rtt* sc = servidorCliente[i];
+        int id = getIdItemRTT(serverClient[i]);
+        Rtt* sc = serverClient[i];
         for(int j=0; j < C; j++, k++)
-            result[k] = createEdge(id, clientes[j], pesos[k]); 
-        
+            result[k] = createEdge(id, clients[j], weights[k]);      
     }
 
-    SortEdgesByWeight(result, S*C);
+    // Ordena o vetor de Edge do menor peso para o maior
+    sortEdgesByWeight(result, S*C);
 
+    // Imprime os resultados e libera a memoria das Edges
     for (int i = 0; i < S * C; i++){
         printEdgeFile(result[i], fileOut);
         freeEdge(result[i]);
     }
-    
+
+    // Faz todos os free's para liberar toda memória alocada
     free(result);
 
-    free(servidores);
-    free(monitores);
-    free(clientes);
+    free(servers);
+    free(monitors);
+    free(clients);
 
-    free(pesos);
+    free(weights);
 
-    freeRTT(servidorCliente, S);
-    freeRTT(servidorMonitor, S);
-    freeRTT(monitorCliente, M);
+    freeRTT(serverClient, S);
+    freeRTT(serverMonitor, S);
+    freeRTT(monitorClient, M);
 
     destroiGraph(graph);
     destroiGraph(graph2);

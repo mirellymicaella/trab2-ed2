@@ -17,11 +17,6 @@ Edge *createEdge(int src, int dest, double weight) {
     return edge;
 }
 
-int getEdgeSrc(Edge *edge) { return edge->src; }
-
-int getEdgeDest(Edge *edge) { return edge->dest; }
-
-double getEdgeWeight(Edge *edge) { return edge->weight; }
 
 void printEdge(Edge *edge) {
     printf("%d --> %d  (%.16lf) \n", edge->src, edge->dest, edge->weight);
@@ -40,7 +35,7 @@ int compareEdges(const void *a, const void *b) {
     return 0;
 }
 
-void SortEdgesByWeight(Edge **edges, int num) { qsort(edges, num, sizeof(Edge *), compareEdges); }
+void sortEdgesByWeight(Edge **edges, int num) { qsort(edges, num, sizeof(Edge *), compareEdges); }
 
 void freeEdge(Edge* edge){
     free(edge);

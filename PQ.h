@@ -13,7 +13,7 @@ typedef struct heap Heap;
 *  pre-condicao: -
 *  pos-condicao: A Heap deverá estar criada
 */
-Heap* PQ_init(int maxN); 
+Heap* initPQ(int maxN); 
 
 /*
 *  Ira inserir um item na estrutura Heap
@@ -23,7 +23,7 @@ Heap* PQ_init(int maxN);
 *  pre-condicao: A Heap e o Item devem existir
 *  pos-condicao: A Heap foi alterada
 */
-void PQ_insert(Item* v, Heap* heap);
+void insertPQ(Item* v, Heap* heap);
 
 /*
 *  Removerá o Item com o menor peso da Heap
@@ -32,7 +32,7 @@ void PQ_insert(Item* v, Heap* heap);
 *  pre-condicao: A Heap deve existir
 *  pos-condicao: A Heap foi alterada
 */
-Item* PQ_delmin(Heap* heap);
+Item* delMinPQ(Heap* heap);
 
 /*
 *  Mudará a prioridade do nó com identificador 'id' para 'value'
@@ -41,7 +41,7 @@ Item* PQ_delmin(Heap* heap);
 *  pre-condicao: A Heap deve existir
 *  pos-condicao: A Heap foi alterada
 */
-void PQ_decrease_key(int id, double value, Heap* heap); 
+void decreaseKeyPQ(int id, double value, Heap* heap); 
 
 /*
 *  Retornará um Item com menor peso da PQ e irá retira-lo
@@ -50,7 +50,7 @@ void PQ_decrease_key(int id, double value, Heap* heap);
 *  pre-condicao: A Heap deve existir
 *  pos-condicao: A Heap foi alterada
 */
-Item* PQ_min(Heap* heap);
+Item* getMinPQ(Heap* heap);
 
 /*
 *  Retornará True caso a PQ esteja vazia
@@ -59,7 +59,7 @@ Item* PQ_min(Heap* heap);
 *  pre-condicao: A Heap deve existir
 *  pos-condicao: A Heap não deve ser alterada
 */
-bool PQ_empty(Heap* heap);        
+bool isEmptyPQ(Heap* heap);        
 
 /*
 *  Retornará o numero de elementos da PQ
@@ -68,7 +68,7 @@ bool PQ_empty(Heap* heap);
 *  pre-condicao: A Heap deve existir
 *  pos-condicao: A Heap não deve ser alterada
 */
-int  PQ_size(Heap* heap);        
+int  getSizePQ(Heap* heap);        
 
 /*
 *  Altera o peso de um elemento da heap
@@ -77,7 +77,7 @@ int  PQ_size(Heap* heap);
 *  pre-condicao: A Heap deve existir
 *  pos-condicao: A Heap na posição 'pos' será alterada
 */
-void PQ_setPeso(Heap* heap, int pos, double peso);
+void setWeightPQ(Heap* heap, int pos, double peso);
 
 /*
 *  Liberará a memória da heap
@@ -86,7 +86,7 @@ void PQ_setPeso(Heap* heap, int pos, double peso);
 *  pre-condicao: A Heap deve existir
 *  pos-condicao: A Heap não deve existir mais
 */
-void PQ_finish(Heap* heap, int V);
+void destroyPQ(Heap* heap, int V);
 
 /*
 *  Imprime a Heap
@@ -95,6 +95,6 @@ void PQ_finish(Heap* heap, int V);
 *  pre-condicao: A Heap deve existir
 *  pos-condicao: -
 */
-void PQ_print(Heap* heap);
+void printPQ(Heap* heap);
 
 #endif

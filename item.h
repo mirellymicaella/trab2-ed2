@@ -10,7 +10,7 @@ typedef struct item Item;
 *  pre-condicao: Itens devem existir
 *  pos-condicao: Os itens não são alterados
 */
-int more(Item* A, Item* B);
+int moreItem(Item* A, Item* B);
 
 /*
 *  Ira inicializar a estrutura item
@@ -28,7 +28,7 @@ Item** initItem(int t);
 *  pre-condicao: -
 *  pos-condicao: O item será criado
 */
-Item* criaItem(double peso, int id);
+Item* createItem(double peso, int id);
 
 /*
 *  Retorna o peso do item
@@ -37,7 +37,7 @@ Item* criaItem(double peso, int id);
 *  pre-condicao: Item deve existir
 *  pos-condicao: O Item não é alterado
 */
-double retornaPeso(Item* i);
+double getWeightItem(Item* i);
 
 /*
 *  Retorna o id do item
@@ -46,7 +46,7 @@ double retornaPeso(Item* i);
 *  pre-condicao: Item deve existir
 *  pos-condicao: O Item não é alterado
 */
-int retornaId(Item* i);
+int getIdItem(Item* i);
 
 /*
 *  Imprime um item
@@ -64,7 +64,7 @@ void printItem(Item* i);
 *  pre-condicao: Item deve existir
 *  pos-condicao: O peso do item estará alterado
 */
-void setpeso_Item(Item* i, double peso);
+void setWeightItem(Item* i, double peso);
 
 /*
 *  Libera a memória do vetor de itens
@@ -73,6 +73,6 @@ void setpeso_Item(Item* i, double peso);
 *  pre-condicao: O vetor de itens deve existir
 *  pos-condicao: O vetor será apagado
 */
-void destroiItem(Item** item, int t);
+void destroyItem(Item** item, int t);
 
 #endif
